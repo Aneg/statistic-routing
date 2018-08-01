@@ -1,5 +1,7 @@
-123.123.123.123|chrome|windows
+123.123.123.176|chrome|windows
 123.123.123.456|chrome|linux
-123.123.123.234|firefox|windows
-123.123.234.123|chrome|windows
-123.123.645.123|chrome|mac
+123.123.12.234|firefox|windows
+456.12.123.234|chrome|windows
+123.123.234.123|chrome|mac
+123.123.123.234|chrome|mac
+123.123.123.123|chrome|linux

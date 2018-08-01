@@ -1,40 +1,50 @@
-ZendSkeletonApplication
-=======================
+Дано
+----
 
-Introduction
+ДАНО:
+
+2 файла с логами.
+
+В 1-ом файле в каждой строке выводится 5 атрибутов разделенные символом
+«|»: дата, время, IP-адрес пользователя, URL с которого зашел, URL куда зашел.
+
+Во 2-ом — в каждой строке 3 атрибута, также разделенные символом «|»: ip aдрес 
+пользователя, наименование используемого браузера, наименование используемой ОС.
+
+Задача
 ------------
-This is a simple, skeleton application using the ZF2 MVC layer and module
-systems. This application is meant to be used as a starting place for those
-looking to get their feet wet with ZF2.
+1. Нужно придумать структуру БД на СУБД PostgresSQL и наполнить ее данными 
+(На выбор кандидата: можно с помощью sql-скрипта, можно сделать парсер логов) 
+2. Сделать грид просмотра данных со следующими полями: IP-адрес, браузер 
+(возможность сортировки), ос(возможность сортировки), URL с которого зашел первый раз, 
+URL на который зашел последний раз, кол-во просмотренных уникальных URL-адресов. 
+Требуется также фильтрацию данных по IP..
 
-Installation using Composer
----------------------------
+Установка
+---------
 
-The easiest way to create a new ZF2 project is to use [Composer](https://getcomposer.org/). If you don't have it already installed, then please install as per the [documentation](https://getcomposer.org/doc/00-intro.md).
+1. Композер
 
-
-Create your new ZF2 project:
-
-    composer create-project -n -sdev zendframework/skeleton-application path/to/install
-
-
-
-### Installation using a tarball with a local Composer
-
-If you don't have composer installed globally then another way to create a new ZF2 project is to download the tarball and install it:
-
-1. Download the [tarball](https://github.com/zendframework/ZendSkeletonApplication/tarball/master), extract it and then install the dependencies with a locally installed Composer:
-
-        cd my/project/dir
-        curl -#L https://github.com/zendframework/ZendSkeletonApplication/tarball/master | tar xz --strip-components=1
+        composer install
     
+2. Подключить базу данных создав файл `config/autoload/local.php` (пример настроек `config/autoload/local.php.dist`)
 
-2. Download composer into your project directory and install the dependencies:
+3. Загружаем структуру базы из дампа
 
-        curl -s https://getcomposer.org/installer | php
-        php composer.phar install
+Парсинг данных
+--------------
 
-If you don't have access to curl, then install Composer into your project as per the [documentation](https://getcomposer.org/doc/00-intro.md).
+В папке public/data есть 2 заготовленных тестовых файла `displacements.data` и `users.data`
+
+Распарсить и занести данные о пользователях в базу
+
+        php index.php parsing users users.data
+
+Распарсить и занести данные о перемещениях пользователя в базу       
+        
+        php index.php parsing displacements displacements.data
+        
+при желании можно положить свои файлы в папку и указать их при парсинге 
 
 Web server setup
 ----------------
@@ -50,18 +60,6 @@ This will start the cli-server on port 8080, and bind it to all network
 interfaces.
 
 **Note:** The built-in CLI server is *for development only*.
-
-### Vagrant server
-
-This project supports a basic [Vagrant](http://docs.vagrantup.com/v2/getting-started/index.html) configuration with an inline shell provisioner to run the Skeleton Application in a [VirtualBox](https://www.virtualbox.org/wiki/Downloads).
-
-1. Run vagrant up command
-
-    vagrant up
-
-2. Visit [http://localhost:8085](http://localhost:8085) in your browser
-
-Look in [Vagrantfile](Vagrantfile) for configuration details.
 
 ### Apache setup
 

@@ -30,6 +30,8 @@ class IndexController extends AbstractActionController
      *
      * @throws ORMException
      * @throws OptimisticLockException
+     *
+     * TODO: Добавить возможность использовать абсолютные пути к файлу для парсинга
      */
     public function parsingUsersAction()
     {
@@ -56,6 +58,8 @@ class IndexController extends AbstractActionController
      *
      * @throws ORMException
      * @throws OptimisticLockException
+     *
+     * TODO: Добавить возможность использовать абсолютные пути к файлу для парсинга
      */
     public function parsingDisplacementsAction()
     {
