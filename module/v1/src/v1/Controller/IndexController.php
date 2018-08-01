@@ -14,6 +14,9 @@ class IndexController extends AbstractRestfulController
         /** @var EntityManager $entityManager */
         $entityManager = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
 
+        $limit = (int)$this->params()->fromQuery('limit');
+        $start = (int)$this->params()->fromQuery('start');
+
         // IP-адрес, браузер, ос, URL с которого зашел первый раз,
         // URL на который зашел последний раз, кол-во просмотренных уникальных URL-адресов.
         $sql = 'SELECT 
@@ -47,6 +50,6 @@ GROUP by u.ip, u.browser, u.operating_system, dc.url_came, dw.url_went';
         $query->execute();
         $result = $query->fetchAll();
 
-        return new JsonModel(array('response' => $result));
+        return new JsonModel(array('total' => \count($result), 'response' => \array_slice($result, $start, $limit)));
     }
 }
