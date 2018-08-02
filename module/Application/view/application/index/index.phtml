@@ -1,8 +1,8 @@
 <script type="text/javascript">
 
     Ext.require([
-        'Ext.grid.*',
-        'Ext.data.*',
+        'Ext.grid.Panel',
+        'Ext.data.Store',
         'Ext.panel.*',
         'Ext.layout.container.Border'
     ]);
@@ -25,46 +25,13 @@
             pageSize: 10,
             proxy: {
                 type: 'ajax',
-                url: '<?= $this->basePath('/api/v1/index') ?>',
+                url: '<?= $this->basePath('/api/v1/statistic') ?>',
                 reader: {
                     type: 'json',
-                    rootProperty: 'response'
+                    rootProperty: 'statistic'
                 }
             },
             autoLoad: true
-        });
-
-        console.log(store.getData().items);
-
-        var grid = Ext.create('Ext.grid.Panel', {
-            bufferedRenderer: false,
-            pageSize: 10,
-            store: store,
-            plugins: 'gridfilters',
-            closable: true,
-            autoScroll: true,
-            columns: [
-                {
-                    text: "IP", width: 70, dataIndex: 'ip', sortable: false,
-                    filter: {
-                        type: 'string'
-                    }
-                },
-                {text: "Броузер", width: 70, dataIndex: 'browser', sortable: true},
-                {text: "ОС", width: 70, dataIndex: 'operating_system', sortable: true},
-                {text: "URL с которого зашел", width: 125, dataIndex: 'url_came', sortable: false},
-                {text: "URL на который зашел", width: 125, dataIndex: 'url_went', sortable: false},
-                {text: "Число уникальных просмотренных URL", width: 60, dataIndex: 'count_uniqe_url', sortable: false}
-            ],
-            forceFit: true,
-            bbar: Ext.create('Ext.PagingToolbar', {
-                pageSize: 3,
-                store: store,
-                dock: 'bottom',
-                displayInfo: true
-            }),
-            split: true,
-            region: 'north'
         });
 
         Ext.create('Ext.Panel', {
@@ -74,10 +41,38 @@
             height: 400,
             layout: 'border',
             items: [
-                grid
+                Ext.create('Ext.grid.Panel', {
+                    bufferedRenderer: false,
+                    pageSize: 10,
+                    store: store,
+                    plugins: 'gridfilters',
+                    closable: true,
+                    autoScroll: true,
+                    columns: [
+                        {
+                            text: "IP", width: 70, dataIndex: 'ip', sortable: false,
+                            filter: {
+                                type: 'string'
+                            }
+                        },
+                        {text: "Броузер", width: 70, dataIndex: 'browser', sortable: true},
+                        {text: "ОС", width: 70, dataIndex: 'operating_system', sortable: true},
+                        {text: "URL с которого зашел", width: 125, dataIndex: 'url_came', sortable: false},
+                        {text: "URL на который зашел", width: 125, dataIndex: 'url_went', sortable: false},
+                        {text: "Число уникальных просмотренных URL", width: 60, dataIndex: 'count_uniqe_url', sortable: false}
+                    ],
+                    forceFit: true,
+                    bbar: Ext.create('Ext.PagingToolbar', {
+                        pageSize: 10,
+                        store: store,
+                        dock: 'bottom',
+                        displayInfo: true
+                    }),
+                    split: true,
+                    region: 'north'
+                })
             ]
         });
-
 
         store.load();
     });

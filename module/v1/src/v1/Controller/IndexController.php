@@ -9,7 +9,19 @@ use Zend\Mvc\Controller\AbstractRestfulController,
 
 class IndexController extends AbstractRestfulController
 {
-    public function indexAction()
+    /**
+     * Возвращает статистику по перемещениям пользователей.
+     * ip - ip
+     * browser - браузер
+     * operating_system - операционная система
+     * url_came - URL с которого зашел первый раз
+     * url_went - URL на который зашел последний раз
+     * count_uniqe_url - количество просмотренных уникальных URL-адресов
+     *
+     * @return JsonModel
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    public function statisticAction()
     {
         /** @var EntityManager $entityManager */
         $entityManager = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
@@ -50,6 +62,6 @@ GROUP by u.ip, u.browser, u.operating_system, dc.url_came, dw.url_went';
         $query->execute();
         $result = $query->fetchAll();
 
-        return new JsonModel(array('total' => \count($result), 'response' => \array_slice($result, $start, $limit)));
+        return new JsonModel(array('total' => \count($result), 'statistic' => \array_slice($result, $start, $limit)));
     }
 }
